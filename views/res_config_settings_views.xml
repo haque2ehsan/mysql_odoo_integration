@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_mysql" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.mysql</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='general_settings']//widget[@name='res_config_dev_tool']" position="before">
+                <block title="MySQL Authentication" name="mysql_auth_settings">
+                    <setting id="mysql_auth_setting"
+                             help="Allow employees to log in to the Odoo portal using their Laravel ERP (MySQL) credentials. The MySQL username must match the employee Badge ID in Odoo.">
+                        <field name="mysql_auth_enabled"/>
+                        <div invisible="not mysql_auth_enabled" class="mt16">
+                            <div class="row">
+                                <label for="mysql_host" string="Host" class="col-lg-3 o_light_label"/>
+                                <field name="mysql_host" class="o_light_label"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="mysql_port" string="Port" class="col-lg-3 o_light_label"/>
+                                <field name="mysql_port" class="o_light_label"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="mysql_database" string="Database" class="col-lg-3 o_light_label"/>
+                                <field name="mysql_database" class="o_light_label"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="mysql_user" string="User" class="col-lg-3 o_light_label"/>
+                                <field name="mysql_user" class="o_light_label"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="mysql_password" string="Password" class="col-lg-3 o_light_label"/>
+                                <field name="mysql_password" password="True" class="o_light_label"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="mysql_table" string="Table" class="col-lg-3 o_light_label"/>
+                                <field name="mysql_table" class="o_light_label"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="mysql_username_column" string="Username Column" class="col-lg-3 o_light_label"/>
+                                <field name="mysql_username_column" class="o_light_label"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="mysql_password_column" string="Password Column" class="col-lg-3 o_light_label"/>
+                                <field name="mysql_password_column" class="o_light_label"/>
+                            </div>
+                            <div class="alert alert-info mt16" role="alert" style="width: 70%; min-width: 650px;">
+                                <strong><i class="fa fa-info-circle"/> MySQL Setup Reference</strong>
+                                <p class="mt8 mb0">Run this on your Laravel MySQL server to create a read-only user for Odoo:</p>
+                                <pre class="mt8 mb0 bg-white p-2 border rounded" style="font-size: 0.85em; white-space: pre-wrap;">-- Run this in your Laravel MySQL server
+CREATE USER 'odoo_reader'@'&lt;odoo_server_ip&gt;' IDENTIFIED BY 'strong_password_here';
+GRANT SELECT ON laravel_erp.users TO 'odoo_reader'@'&lt;odoo_server_ip&gt;';
+FLUSH PRIVILEGES;</pre>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
